@@ -35,3 +35,6 @@ yarn-error.log*
 
 # 旧打包产物
 lambo-review-monitor.zip
+
+# typescript build info
+tsconfig.tsbuildinfo

@@ -11,7 +11,8 @@
     "db:seed": "tsx prisma/seed.ts",
     "db:studio": "prisma studio",
     "worker": "tsx src/worker/index.ts",
-    "worker:once": "tsx src/worker/once.ts"
+    "worker:once": "tsx src/worker/once.ts",
+    "capture": "tsx src/worker/capture.ts"
   },
   "dependencies": {
     "@prisma/client": "^5.15.0",

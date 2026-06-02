@@ -100,9 +100,35 @@ npm run worker:once
 
 `.env` 中设置 `SCRAPER=mock`，使用模拟数据运行，无需真实浏览器，适合开发和演示。
 
-### Playwright 模式
+### Playwright 模式（接入真实商家后台）
 
-设置 `SCRAPER=playwright`，使用真实浏览器抓取。需要先在「账号管理」页面登录账号或导入 Cookies。
+设置 `SCRAPER=playwright`，用真实浏览器登录**酒店自己的商家后台**抓取**本店点评**。
+
+> 说明：携程 / 飞猪 / 去哪儿都没有面向普通商家、可直接用代码调用的公开点评 API。
+> 拿真实数据的现实路径是：用酒店自己的商家账号登录后台 → 复用登录态 → 解析点评页。
+> 验证码 / 短信 / 风控由人工在浏览器中完成，本项目不做任何绕过。
+
+完整流程：
+
+1. **安装浏览器内核**（仅首次）
+   ```bash
+   npx playwright install chromium
+   ```
+2. **登录商家后台**：在「账号管理」页点击「真实登录」，在弹出的浏览器里完成登录，
+   登录态会保存到 `data/`（也可用「导入 Cookies」粘贴登录态）。
+3. **探测后台点评页结构**（关键，决定能否拿到数据）：
+   ```bash
+   npm run capture ctrip      # 或 fliggy / qunar
+   ```
+   在弹出的浏览器里打开本店「点评管理」页，回终端按 Enter；
+   工具会把页面 HTML 与接口 JSON 存到 `data/capture/`。
+4. **根据探测结果校准**：把真实点评页 URL 填入 `.env`（`CTRIP_REVIEW_URL` 等），
+   并在 `src/worker/scrapers/configs.ts` 里填写各平台的点评选择器。
+5. **抓取**：`SCRAPER=playwright` 后，在「评论 / 差评」页点「手动抓取」，
+   或运行 `npm run worker:once`。
+
+> 选择器未校准时，Playwright 模式会返回 0 条并提示先运行 `capture`——这是预期行为，
+> 因为后台页面结构只有登录后才能确定，不能靠猜。
 
 ## 项目结构
 

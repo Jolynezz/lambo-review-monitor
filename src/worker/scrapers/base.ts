@@ -38,7 +38,7 @@ export abstract class BaseScraper implements Scraper {
     const { chromium } = await import('playwright');
 
     const browser = await chromium.launch({
-      headless: true,
+      headless: process.env.SCRAPER_HEADLESS !== 'false',
       args: [
         '--no-sandbox',
         '--disable-setuid-sandbox',

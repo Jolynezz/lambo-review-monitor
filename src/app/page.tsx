@@ -12,6 +12,12 @@ export default async function DashboardPage() {
   const ratingAgg = await prisma.review.aggregate({ _avg: { rating: true } });
   const avgRating = ratingAgg._avg.rating ?? 0;
 
+  const negativeReviews = await prisma.review.count({ where: { rating: { lte: 3 } } });
+  const positiveReviews = await prisma.review.count({ where: { rating: { gte: 4 } } });
+  const repliedReviews = await prisma.review.count({ where: { replyStatus: 'replied' } });
+  const goodRate = totalReviews ? Math.round((positiveReviews / totalReviews) * 100) : 0;
+  const replyRate = totalReviews ? Math.round((repliedReviews / totalReviews) * 100) : 0;
+
   const reviewsByPlatform = await prisma.review.groupBy({
     by: ['platform'],
     _count: true,
@@ -35,7 +41,7 @@ export default async function DashboardPage() {
     where: { status: 'pending' },
     include: { review: true },
     orderBy: { createdAt: 'desc' },
-    take: 5,
+    take: 8,
   });
 
   return (
@@ -50,16 +56,21 @@ export default async function DashboardPage() {
         </div>
       </div>
 
-      <div className="stats-grid reveal d1">
+      <div className="stats-grid stats-6 reveal d1">
         <div className="stat-card">
           <div className="stat-label">总评论数</div>
           <div className="stat-value">{totalReviews}</div>
-          <div className="stat-foot">已归档的全部访客点评</div>
+          <div className="stat-foot">全部访客点评</div>
+        </div>
+        <div className="stat-card">
+          <div className="stat-label">差评总数</div>
+          <div className="stat-value is-rust">{negativeReviews}</div>
+          <div className="stat-foot">评分 ≤ 3 的点评</div>
         </div>
         <div className="stat-card">
           <div className="stat-label">待处理差评</div>
           <div className="stat-value is-rust">{totalAlerts}</div>
-          <div className="stat-foot">需要人工跟进的预警</div>
+          <div className="stat-foot">已处理 {handledAlerts} 条</div>
         </div>
         <div className="stat-card">
           <div className="stat-label">平均评分</div>
@@ -67,9 +78,14 @@ export default async function DashboardPage() {
           <div className="stat-foot">全平台综合星级</div>
         </div>
         <div className="stat-card">
+          <div className="stat-label">好评率</div>
+          <div className="stat-value is-olive">{goodRate}%</div>
+          <div className="stat-foot">回复率 {replyRate}%</div>
+        </div>
+        <div className="stat-card">
           <div className="stat-label">监控账号</div>
           <div className="stat-value">{totalAccounts}</div>
-          <div className="stat-foot">{handledAlerts} 条预警已妥善处理</div>
+          <div className="stat-foot">{reviewsByPlatform.length} 个平台</div>
         </div>
       </div>
 

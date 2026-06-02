@@ -103,5 +103,5 @@ export default function ChinaMap({ data, topNames }: ChinaMapProps) {
     };
   }, [data, topNames]);
 
-  return <div ref={ref} style={{ width: '100%', height: 480 }} />;
+  return <div ref={ref} style={{ width: '100%', height: 400 }} />;
 }

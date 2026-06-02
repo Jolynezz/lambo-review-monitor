@@ -5,6 +5,7 @@ export interface ScrapedReview {
   reviewerName: string;
   content: string;
   roomType: string;
+  province?: string;
   stayDate: string | null;
   replyStatus: string;
 }

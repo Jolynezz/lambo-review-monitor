@@ -1,6 +1,7 @@
 import { prisma } from '@/lib/db';
 import Link from 'next/link';
 import PlatformBadge from './platform-badge';
+import ChinaMap from './china-map';
 
 export default async function DashboardPage() {
   const totalReviews = await prisma.review.count();
@@ -16,6 +17,19 @@ export default async function DashboardPage() {
     _count: true,
   });
   const maxPlatform = Math.max(1, ...reviewsByPlatform.map((p) => p._count));
+
+  // 差评（评分 ≤ 3）按客人来源省份分布
+  const negByProvince = await prisma.review.groupBy({
+    by: ['province'],
+    where: { rating: { lte: 3 }, province: { not: '' } },
+    _count: true,
+  });
+  const provinceData = negByProvince
+    .map((p) => ({ name: p.province, value: p._count }))
+    .sort((a, b) => b.value - a.value);
+  const topProvinces = provinceData.slice(0, 3);
+  const topNames = topProvinces.map((p) => p.name);
+  const totalNegative = provinceData.reduce((s, p) => s + p.value, 0);
 
   const recentAlerts = await prisma.alert.findMany({
     where: { status: 'pending' },
@@ -59,8 +73,44 @@ export default async function DashboardPage() {
         </div>
       </div>
 
+      <div className="card reveal d2">
+        <div className="card-header">
+          差评客源分布 · 中国
+          <span className="count">按省份 · 共 {totalNegative} 条差评</span>
+        </div>
+        <div className="map-layout">
+          <div className="map-canvas">
+            <ChinaMap data={provinceData} topNames={topNames} />
+          </div>
+          <div className="map-rank">
+            <div className="map-rank-title">差评最多的三个省份</div>
+            {topProvinces.map((p, i) => (
+              <div key={p.name} className="rank-row">
+                <span className="rank-no">{i + 1}</span>
+                <span className="rank-name">{p.name}</span>
+                <span className="rank-bar">
+                  <span className="rank-bar-fill" style={{ width: `${(p.value / (topProvinces[0]?.value || 1)) * 100}%` }} />
+                </span>
+                <span className="rank-val">{p.value}</span>
+              </div>
+            ))}
+            {provinceData.length > 3 && (
+              <div className="map-rank-rest">
+                <div className="map-rank-subtitle">其他省份</div>
+                {provinceData.slice(3).map((p) => (
+                  <div key={p.name} className="rest-row">
+                    <span>{p.name}</span>
+                    <span className="muted">{p.value}</span>
+                  </div>
+                ))}
+              </div>
+            )}
+          </div>
+        </div>
+      </div>
+
       <div className="two-col">
-        <div className="card reveal d2">
+        <div className="card reveal d3">
           <div className="card-header">
             各平台评论分布
             <span className="count">BY PLATFORM</span>
@@ -87,10 +137,10 @@ export default async function DashboardPage() {
           )}
         </div>
 
-        <div className="card reveal d3">
+        <div className="card reveal d4">
           <div className="card-header">
             最新差评预警
-            <Link href="/reviews?view=alerts" className="count" style={{ color: 'var(--gold)' }}>查看全部 →</Link>
+            <Link href="/reviews?view=alerts" className="count" style={{ color: 'var(--red)' }}>查看全部 →</Link>
           </div>
           {recentAlerts.length === 0 ? (
             <div className="empty-state">

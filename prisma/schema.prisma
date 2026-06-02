@@ -29,6 +29,7 @@ model Review {
   reviewerName String   @default("")
   content      String   @default("")
   roomType     String   @default("")
+  province     String   @default("") // 客人来源省份（全称，如「广东省」）
   stayDate     String?  // 入住日期
   replyStatus  String   @default("none") // none | replied | ignored
   scrapedAt    DateTime @default(now())

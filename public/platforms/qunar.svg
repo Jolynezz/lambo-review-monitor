@@ -6,26 +6,6 @@
     </linearGradient>
   </defs>
   <rect width="80" height="80" rx="19" fill="url(#qunarBg)"/>
-  <!-- camel body with two humps + head -->
-  <path d="M17 50
-           Q16 44 21 44
-           Q24 31 30 44
-           Q33 36 36 44
-           Q38 44 40 44
-           Q45 44 46 38
-           L49 27
-           Q50 23 54 24
-           L56 27
-           Q56 30 53 31
-           L52 35
-           Q51 39 51 44
-           Q51 48 49 51
-           L46 51
-           L46 46
-           Q44 45 42 46
-           L42 51 L38 51 L38 46
-           Q35 45 33 46 L33 51 L29 51 L29 46
-           Q26 45 24 46 L24 51 L20 51
-           Q17 50 17 50 Z" fill="#FFFFFF"/>
-  <circle cx="52.5" cy="29" r="1.6" fill="#0AA0B6"/>
+  <text x="40" y="44" text-anchor="middle" dominant-baseline="central"
+        font-family="'PingFang SC','Microsoft YaHei',sans-serif" font-size="40" font-weight="700" fill="#FFFFFF">去</text>
 </svg>

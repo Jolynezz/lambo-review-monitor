@@ -195,6 +195,32 @@ a:hover { color: var(--red-bright); }
 .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
 @media (max-width: 1000px) { .two-col { grid-template-columns: 1fr; } }
 
+/* ---- China map + ranking ---- */
+.map-layout { display: grid; grid-template-columns: 1.7fr 1fr; gap: 28px; align-items: start; }
+@media (max-width: 920px) { .map-layout { grid-template-columns: 1fr; } }
+.map-canvas { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius-lg); overflow: hidden; }
+
+.map-rank { padding-top: 4px; }
+.map-rank-title { font-family: var(--font-display); font-size: 16px; font-weight: 600; color: var(--ink); margin-bottom: 18px; }
+
+.rank-row { display: grid; grid-template-columns: auto 1fr; grid-template-areas: "no name" "no bar"; column-gap: 14px; row-gap: 7px; align-items: center; padding: 13px 0; border-bottom: 1px solid var(--line); }
+.rank-no {
+  grid-area: no; width: 30px; height: 30px; border-radius: 50%;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-weight: 700; font-size: 15px;
+  color: #fff; background: var(--red);
+}
+.rank-row:nth-child(3) .rank-no { background: var(--red-bright); }
+.rank-row:nth-child(4) .rank-no { background: #E08A8E; }
+.rank-name { grid-area: name; font-weight: 600; font-size: 15px; color: var(--ink); display: flex; justify-content: space-between; }
+.rank-val { grid-area: name; justify-self: end; font-family: var(--font-display); font-weight: 700; color: var(--red); font-size: 17px; }
+.rank-bar { grid-area: bar; height: 5px; background: var(--paper-sunk); border-radius: 100px; overflow: hidden; }
+.rank-bar-fill { display: block; height: 100%; background: linear-gradient(90deg, var(--red), var(--red-bright)); border-radius: 100px; }
+
+.map-rank-rest { margin-top: 18px; }
+.map-rank-subtitle { font-size: 10.5px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-faint); margin-bottom: 10px; }
+.rest-row { display: flex; justify-content: space-between; font-size: 13px; color: var(--ink-soft); padding: 5px 0; }
+
 /* ============================================================
    Stat ledger
    ============================================================ */

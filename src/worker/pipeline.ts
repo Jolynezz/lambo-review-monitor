@@ -59,6 +59,7 @@ export async function runPipeline(): Promise<PipelineResult> {
               reviewerName: reviewData.reviewerName,
               content: reviewData.content,
               roomType: reviewData.roomType,
+              province: reviewData.province || '',
               stayDate: reviewData.stayDate,
               replyStatus: reviewData.replyStatus,
               accountId: account.id,

@@ -22,6 +22,16 @@ type Seed = {
   alertStatus?: 'pending' | 'handled' | 'dismissed';
 };
 
+// 客人来源省份（按 REVIEWS 顺序一一对应；省份名与地图 GeoJSON 全称一致）
+// 差评（评分≤3）集中在 广东省(6) / 四川省(5) / 浙江省(4)，构成 Top 3。
+const PROVINCE_PLAN = [
+  '广东省', '广东省', '四川省', '四川省', '北京市', '上海市', '浙江省', '江苏省', // 1-8
+  '广东省', '浙江省', '四川省', '广东省', '江苏省', '广东省', '浙江省', '四川省', // 9-16
+  '浙江省', '北京市', '湖北省', '北京市', '广东省', '重庆市', '四川省', '陕西省', // 17-24
+  '上海市', '江苏省', '四川省', '浙江省', '湖南省', '山东省', '福建省', '广东省', // 25-32
+  '四川省', '广东省', '浙江省', '河南省', // 33-36
+];
+
 const ACCOUNTS = [
   { key: 'ctrip1', platform: 'ctrip', label: '携程旗舰店', sessionStatus: 'logged_in', lastLoginAt: '2024-05-27T09:12:00', lastScrapeAt: '2024-05-28T06:00:00' },
   { key: 'ctrip2', platform: 'ctrip', label: '携程·成都直营店', sessionStatus: 'logged_in', lastLoginAt: '2024-05-25T20:40:00', lastScrapeAt: '2024-05-28T06:00:00' },
@@ -153,6 +163,7 @@ async function main() {
         reviewerName: r.reviewerName,
         content: r.content,
         roomType: r.roomType,
+        province: PROVINCE_PLAN[idx - 1] || '',
         stayDate: r.stayDate,
         replyStatus: r.replyStatus,
         scrapedAt: new Date(r.scrapedAt),

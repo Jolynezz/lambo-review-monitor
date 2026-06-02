@@ -17,6 +17,8 @@ const POOL: Omit<ScrapedReview, 'externalId'>[] = [
   { rating: 4.0, ratingScale: 5, reviewerName: '测试用户·沈', content: '亲子出行，泳池和健身房设施齐全，孩子很喜欢。早餐品类丰富，值得推荐。', roomType: '豪华双床房', stayDate: '2024-05-15', replyStatus: 'replied' },
 ];
 
+const PROVINCES = ['广东省', '四川省', '浙江省', '江苏省', '北京市', '上海市', '山东省', '河南省', '湖北省', '重庆市'];
+
 export class MockScraper implements Scraper {
   platform = 'mock';
 
@@ -30,6 +32,7 @@ export class MockScraper implements Scraper {
 
     const reviews: ScrapedReview[] = shuffled.map((r, i) => ({
       ...r,
+      province: PROVINCES[Math.floor(Math.random() * PROVINCES.length)],
       externalId: `mock-${stamp}-${String(i + 1).padStart(3, '0')}`,
     }));
 

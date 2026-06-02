@@ -17,8 +17,8 @@ export default function Nav() {
   return (
     <aside className="sidebar">
       <Link href="/" className="brand">
-        <div className="brand-mark">Toninelli</div>
-        <div className="brand-name">Lamborghini</div>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src="/logo.png" alt="Tonino Lamborghini Resort" className="brand-logo" />
         <div className="brand-sub">Chengdu · Review Console</div>
         <div className="brand-rule" />
       </Link>

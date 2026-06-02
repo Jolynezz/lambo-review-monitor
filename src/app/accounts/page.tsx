@@ -1,12 +1,7 @@
 import { prisma } from '@/lib/db';
 import AccountsActions from './actions';
 import RealLoginButton from './real-login-button';
-
-const platformLabels: Record<string, string> = {
-  ctrip: '携程',
-  fliggy: '飞猪',
-  qunar: '去哪儿',
-};
+import PlatformBadge from '../platform-badge';
 
 const statusLabels: Record<string, string> = {
   none: '未登录',
@@ -58,7 +53,7 @@ export default async function AccountsPage() {
             <tbody>
               {accounts.map((account) => (
                 <tr key={account.id}>
-                  <td><span className="badge badge-platform">{platformLabels[account.platform] || account.platform}</span></td>
+                  <td><PlatformBadge platform={account.platform} /></td>
                   <td className="cell-name">{account.label}</td>
                   <td>
                     <span className={`badge ${statusBadgeClass[account.sessionStatus] || 'badge-dismissed'}`}>

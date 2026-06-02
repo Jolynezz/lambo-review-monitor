@@ -1,6 +1,7 @@
 'use client';
 
 import { useState, useRef, useCallback, useEffect } from 'react';
+import PlatformBadge from '../platform-badge';
 
 interface ReviewRecord {
   id: string;
@@ -34,12 +35,6 @@ interface HistoryResponse {
     repliedCount: number;
   };
 }
-
-const platformLabels: Record<string, string> = {
-  ctrip: '携程',
-  fliggy: '飞猪',
-  qunar: '去哪儿',
-};
 
 const reviewTypes = [
   { key: 'all', label: '全部' },
@@ -249,7 +244,7 @@ export default function HistoryPage() {
               ) : data && data.data.length > 0 ? (
                 data.data.map((review) => (
                   <tr key={review.id}>
-                    <td><span className="badge badge-platform">{platformLabels[review.platform] || review.platform}</span></td>
+                    <td><PlatformBadge platform={review.platform} /></td>
                     <td>
                       <span className={`rating ${review.rating <= 3 ? 'rating-low' : ''}`}>
                         {review.rating}<span className="scale"> / {review.ratingScale}</span>

@@ -1,15 +1,10 @@
 import { prisma } from '@/lib/db';
 import ReviewsActions from './actions';
+import PlatformBadge from '../platform-badge';
 
 interface PageProps {
   searchParams: { platform?: string; status?: string; view?: string };
 }
-
-const platformLabels: Record<string, string> = {
-  ctrip: '携程',
-  fliggy: '飞猪',
-  qunar: '去哪儿',
-};
 
 export default async function ReviewsPage({ searchParams }: PageProps) {
   const platform = searchParams.platform || '';
@@ -99,11 +94,7 @@ export default async function ReviewsPage({ searchParams }: PageProps) {
             <tbody>
               {reviews.map((review) => (
                 <tr key={review.id}>
-                  <td>
-                    <span className="badge badge-platform">
-                      {platformLabels[review.platform] || review.platform}
-                    </span>
-                  </td>
+                  <td><PlatformBadge platform={review.platform} /></td>
                   <td>
                     <span className={`rating ${review.rating <= 3 ? 'rating-low' : ''}`}>
                       {review.rating}

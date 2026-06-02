@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80">
+  <defs>
+    <linearGradient id="ctripBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#3D9BF5"/>
+      <stop offset="1" stop-color="#1C6FE0"/>
+    </linearGradient>
+  </defs>
+  <rect width="80" height="80" rx="19" fill="url(#ctripBg)"/>
+  <path d="M61 19 L16 38 L34.5 44.5 L41 62 L48 47.5 L61 19 Z" fill="#FFFFFF"/>
+  <path d="M61 19 L34.5 44.5 L41 62 Z" fill="#CFE3FF"/>
+  <path d="M61 19 L34.5 44.5 L48 47.5 Z" fill="#EAF3FF"/>
+</svg>

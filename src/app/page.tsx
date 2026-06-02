@@ -1,11 +1,6 @@
 import { prisma } from '@/lib/db';
 import Link from 'next/link';
-
-const platformLabels: Record<string, string> = {
-  ctrip: '携程',
-  fliggy: '飞猪',
-  qunar: '去哪儿',
-};
+import PlatformBadge from './platform-badge';
 
 export default async function DashboardPage() {
   const totalReviews = await prisma.review.count();
@@ -80,7 +75,7 @@ export default async function DashboardPage() {
               {reviewsByPlatform.map((item) => (
                 <div key={item.platform}>
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 8 }}>
-                    <span className="badge badge-platform">{platformLabels[item.platform] || item.platform}</span>
+                    <PlatformBadge platform={item.platform} />
                     <span className="serif" style={{ fontSize: 22, fontWeight: 600 }}>{item._count}</span>
                   </div>
                   <div style={{ height: 4, background: 'var(--paper-sunk)', borderRadius: 100, overflow: 'hidden' }}>
@@ -117,11 +112,7 @@ export default async function DashboardPage() {
                 <tbody>
                   {recentAlerts.map((alert) => (
                     <tr key={alert.id}>
-                      <td>
-                        <span className="badge badge-platform">
-                          {platformLabels[alert.review.platform] || alert.review.platform}
-                        </span>
-                      </td>
+                      <td><PlatformBadge platform={alert.review.platform} /></td>
                       <td>
                         <span className={`rating ${alert.review.rating <= 3 ? 'rating-low' : ''}`}>
                           {alert.review.rating}

@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 80 80" width="80" height="80">
+  <defs>
+    <linearGradient id="fliggyBg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#FF9540"/>
+      <stop offset="1" stop-color="#FF6A00"/>
+    </linearGradient>
+  </defs>
+  <rect width="80" height="80" rx="19" fill="url(#fliggyBg)"/>
+  <!-- ears -->
+  <path d="M23 31 L29.5 17.5 L37 31.5 Z" fill="#FFFFFF"/>
+  <path d="M57 31 L50.5 17.5 L43 31.5 Z" fill="#FFFFFF"/>
+  <!-- head -->
+  <ellipse cx="40" cy="45" rx="21.5" ry="17.5" fill="#FFFFFF"/>
+  <!-- eyes -->
+  <circle cx="32" cy="41" r="2.6" fill="#FF7A1A"/>
+  <circle cx="48" cy="41" r="2.6" fill="#FF7A1A"/>
+  <!-- snout -->
+  <ellipse cx="40" cy="51" rx="10.5" ry="7" fill="#FFE2CE"/>
+  <circle cx="36" cy="51" r="2" fill="#FF7A1A"/>
+  <circle cx="44" cy="51" r="2" fill="#FF7A1A"/>
+</svg>

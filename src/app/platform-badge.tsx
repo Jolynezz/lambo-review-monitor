@@ -1,5 +1,5 @@
 const META: Record<string, { name: string; logo: string }> = {
-  ctrip: { name: '携程', logo: '/platforms/ctrip.svg' },
+  ctrip: { name: '携程', logo: '/platforms/ctrip.png' },
   fliggy: { name: '飞猪', logo: '/platforms/fliggy.svg' },
   qunar: { name: '去哪儿', logo: '/platforms/qunar.svg' },
 };

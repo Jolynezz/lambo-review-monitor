@@ -14,9 +14,8 @@ export default function RealLoginButton({ accountId, accountLabel }: RealLoginBu
 
   async function startLogin() {
     setIsLoggingIn(true);
-    setMessage('正在启动浏览器...');
+    setMessage('正在启动浏览器…');
     setShowDialog(true);
-
     try {
       const res = await fetch('/api/accounts/login', {
         method: 'POST',
@@ -32,7 +31,7 @@ export default function RealLoginButton({ accountId, accountLabel }: RealLoginBu
   }
 
   async function completeLogin() {
-    setMessage('正在保存登录信息...');
+    setMessage('正在保存登录信息…');
     try {
       const res = await fetch('/api/accounts/login', {
         method: 'POST',
@@ -41,7 +40,6 @@ export default function RealLoginButton({ accountId, accountLabel }: RealLoginBu
       });
       const data = await res.json();
       setMessage(data.message || '登录完成');
-      
       if (data.status === 'success') {
         setTimeout(() => {
           setShowDialog(false);
@@ -69,59 +67,33 @@ export default function RealLoginButton({ accountId, accountLabel }: RealLoginBu
 
   return (
     <>
-      <button
-        className="btn btn-sm btn-primary"
-        onClick={startLogin}
-        disabled={isLoggingIn}
-      >
-        {isLoggingIn ? '登录中...' : '真实登录'}
+      <button className="btn btn-ghost btn-sm" onClick={startLogin} disabled={isLoggingIn}>
+        {isLoggingIn ? '登录中…' : '真实登录'}
       </button>
 
       {showDialog && (
-        <div
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            background: 'rgba(0,0,0,0.7)',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            zIndex: 300,
-          }}
-        >
-          <div
-            className="card"
-            style={{ width: 450, padding: 24 }}
-          >
-            <h3 style={{ marginBottom: 16 }}>🔐 登录 {accountLabel}</h3>
-            
-            <div style={{ marginBottom: 20, lineHeight: 1.6 }}>
+        <div className="modal-scrim">
+          <div className="modal" style={{ maxWidth: 440 }}>
+            <div className="modal-title">登录 · {accountLabel}</div>
+            <div className="modal-sub">在弹出的浏览器中完成平台登录，随后返回确认。</div>
+
+            <div style={{
+              padding: '16px 18px', background: 'var(--paper-3)', border: '1px solid var(--line)',
+              borderRadius: 'var(--radius)', fontSize: 13.5, lineHeight: 1.6, color: 'var(--ink-soft)', marginBottom: 20,
+            }}>
               {message}
             </div>
 
             {isLoggingIn && (
-              <div style={{ display: 'flex', gap: 12 }}>
-                <button
-                  className="btn btn-primary"
-                  onClick={completeLogin}
-                >
-                  我已完成登录
-                </button>
-                <button
-                  className="btn btn-secondary"
-                  onClick={cancelLogin}
-                >
-                  取消
-                </button>
+              <div className="actions">
+                <button className="btn btn-gold" onClick={completeLogin}>我已完成登录</button>
+                <button className="btn btn-secondary" onClick={cancelLogin}>取消</button>
               </div>
             )}
 
-            <div style={{ marginTop: 16, fontSize: 12, color: 'var(--text-muted)' }}>
-              💡 提示：点击"真实登录"后会弹出浏览器窗口，请在浏览器中完成携程的扫码或密码登录，然后回到这里点击"我已完成登录"。
-            </div>
+            <p className="form-hint" style={{ marginTop: 18 }}>
+              点击「真实登录」后会弹出浏览器窗口，请在其中完成扫码或密码登录，再回到此处点击「我已完成登录」。
+            </p>
           </div>
         </div>
       )}

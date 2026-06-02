@@ -1,9 +1,10 @@
 import type { Metadata } from 'next';
 import Nav from './nav';
+import './globals.css';
 
 export const metadata: Metadata = {
-  title: 'Lamborghini Review Monitor',
-  description: '成都托尼洛兰博基尼酒店 OTA 差评监控与通知系统',
+  title: 'Toninelli Lamborghini · Review Console',
+  description: '成都托尼洛兰博基尼酒店 · OTA 口碑监控与差评预警台',
 };
 
 export default function RootLayout({
@@ -13,11 +14,21 @@ export default function RootLayout({
 }) {
   return (
     <html lang="zh-CN">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=Bodoni+Moda:ital,opsz,wght@0,6..96,400;0,6..96,500;0,6..96,600;0,6..96,700;1,6..96,400;1,6..96,500&family=Noto+Sans+SC:wght@400;500;700&family=Noto+Serif+SC:wght@500;600&display=swap"
+          rel="stylesheet"
+        />
+      </head>
       <body>
-        <Nav />
-        <main className="container">
-          {children}
-        </main>
+        <div className="app-shell">
+          <Nav />
+          <div className="app-main">
+            <main className="container">{children}</main>
+          </div>
+        </div>
       </body>
     </html>
   );

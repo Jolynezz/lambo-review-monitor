@@ -22,18 +22,10 @@ export default function ReviewsActions() {
 
   return (
     <div className="actions">
-      <button
-        className="btn btn-primary"
-        onClick={handleRunScrape}
-        disabled={loading}
-      >
-        {loading ? '抓取中...' : '手动抓取'}
+      {result && <span className="toast">{result}</span>}
+      <button className="btn btn-gold" onClick={handleRunScrape} disabled={loading}>
+        {loading ? '抓取中…' : '手动抓取'}
       </button>
-      {result && (
-        <span style={{ fontSize: 13, color: 'var(--text-secondary)', alignSelf: 'center' }}>
-          {result}
-        </span>
-      )}
     </div>
   );
 }

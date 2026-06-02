@@ -10,11 +10,15 @@ export default async function SettingsPage() {
 
   return (
     <div>
-      <div className="page-header">
-        <h1>检测设置</h1>
+      <div className="page-header reveal">
+        <div>
+          <div className="page-eyebrow">Detection Rules</div>
+          <h1>检测设置</h1>
+          <p className="page-desc">定义差评的判定标准与通知策略——评分阈值、敏感关键词，以及何时发出预警。</p>
+        </div>
       </div>
 
-      <div className="card">
+      <div className="card reveal d1">
         <SettingsForm
           initialSettings={{
             negative_threshold: settingsMap['negative_threshold'] || '3',

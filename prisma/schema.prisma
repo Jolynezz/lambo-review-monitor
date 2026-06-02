@@ -1,0 +1,61 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id            String   @id @default(cuid())
+  platform      String   // ctrip | fliggy | qunar
+  label         String   // 显示名称
+  sessionStatus String   @default("none") // none | logged_in | expired
+  lastLoginAt   DateTime?
+  lastScrapeAt  DateTime?
+  userDataDir   String?  // Playwright user data 目录
+  reviews       Review[]
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Review {
+  id           String   @id @default(cuid())
+  platform     String   // ctrip | fliggy | qunar
+  externalId   String   @unique
+  rating       Float
+  ratingScale  Int      @default(5) // 5分制
+  reviewerName String   @default("")
+  content      String   @default("")
+  roomType     String   @default("")
+  stayDate     String?  // 入住日期
+  replyStatus  String   @default("none") // none | replied | ignored
+  scrapedAt    DateTime @default(now())
+  alert        Alert?
+  accountId    String
+  account      Account  @relation(fields: [accountId], references: [id])
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+model Alert {
+  id              String   @id @default(cuid())
+  status          String   @default("pending") // pending | handled | dismissed
+  reasons         String   @default("[]") // 差评原因列表 (JSON数组)
+  matchedKeywords String   @default("[]") // 匹配到的关键词 (JSON数组)
+  reviewId        String   @unique
+  review          Review   @relation(fields: [reviewId], references: [id])
+  notifiedAt      DateTime?
+  handledAt       DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}
+
+model Setting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
